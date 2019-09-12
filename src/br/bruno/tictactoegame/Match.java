@@ -10,17 +10,17 @@ public class Match {
 	
 	public Match() {
 		System.out.println("Type name of first player:");
-		String playerNameOne = getNameFromUser();
+		String playerNameOne = getDataFromUser();
 		playerOne = new Player(playerNameOne, "X");
 		
 		System.out.println("Type name of second player:");
-		String playerNameTwo = getNameFromUser();
+		String playerNameTwo = getDataFromUser();
 		playerTwo = new Player(playerNameTwo, "O");
 		
 		board = new Board();
 	}
 	
-	private String getNameFromUser() {
+	private static String getDataFromUser() {
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 		String input = null;
 		try {
@@ -80,8 +80,26 @@ public class Match {
 		System.out.println("We tied!");
 	}
 	
-	public static void main(String[] args) {
+	private static void initMatch() {
 		Match match = new Match();
 		match.passTheTurn(match.getPlayerOne());
+	}
+	
+	private static String validateAnswer(String answer) {
+		while((! answer.equals("y")) && (! answer.equals("n"))) {
+			System.out.println("Invalid answer. Please, type y or n");
+			answer = getDataFromUser();
+		}
+		return answer;
+	}
+	
+	public static void main(String[] args) {
+		String userChoice = "";
+		
+		do {
+			initMatch();
+			System.out.println("Want to play another match? y/n?");
+			userChoice = validateAnswer(getDataFromUser());
+		}while(userChoice.equals("y"));
 	}
 }
